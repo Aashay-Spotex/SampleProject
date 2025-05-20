@@ -18,5 +18,5 @@ func main() {
 	for num := range ch {
 		fmt.Println(num)
 	}
-	fmt.Println("Done")
+	fmt.Println("channel Done")
 }
