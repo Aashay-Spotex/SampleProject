@@ -5,7 +5,7 @@ import "fmt"
 // Example of Unbuffered Channel the sender will block until the receiver is
 // ready to receive the data
 
-func print(ch chan int) {
+func printDisplay(ch chan int) {
 	for i := 0; i < 10; i++ {
 		ch <- i
 	}
@@ -14,9 +14,9 @@ func print(ch chan int) {
 
 func main() {
 	ch := make(chan int)
-	go print(ch)
+	go printDisplay(ch)
 	for num := range ch {
 		fmt.Println(num)
 	}
-	fmt.Println("Done")
+	fmt.Println("channel Done")
 }
