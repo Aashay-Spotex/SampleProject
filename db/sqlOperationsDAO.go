@@ -36,6 +36,28 @@ func SelectQuery(db1 *sql.DB) []bean.Employee {
 	}
 	return employeeList
 }
+func GetOrderList(db1 *sql.DB) []bean.Order {
+	var orderList []bean.Order
+	query := "SELECT * FROM Orders"
+	rows, err := db1.Query(query)
+	if err != nil {
+		fmt.Println("Error executing query: ", err.Error())
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var acctId int
+		var acctUser string
+		var currPair string
+		var dealQty float64
+		var ctrQty float64
+		err := rows.Scan(&acctId, &acctUser, &currPair, &dealQty, &ctrQty)
+		if err != nil {
+			fmt.Println("Error scanning row: ", err.Error())
+		}
+		orderList = append(orderList, bean.Order{}.New(acctId, acctUser, currPair, dealQty, ctrQty))
+	}
+	return orderList
+}
 
 // takes employeeList as a parameter
 func InsertQuery(db1 *sql.DB, employeeList []bean.Employee) {
