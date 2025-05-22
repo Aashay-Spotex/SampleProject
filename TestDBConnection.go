@@ -40,6 +40,15 @@ func main() {
 
 	db.InsertQuery(db1, employeeList)
 
+	db.InsertObjectQuery(db1, employee1)
+	db.RetrieveObjectQuery(db1, employee1.Id)
+	db.InsertObjectQuery(db1, employee2)
+	db.RetrieveObjectQuery(db1, employee2.Id)
+	db.InsertObjectQuery(db1, employee3)
+	db.RetrieveObjectQuery(db1, employee3.Id)
+	db.InsertObjectQuery(db1, employee4)
+	db.RetrieveObjectQuery(db1, employee4.Id)
+
 	employeesList := db.SelectQuery(db1)
 	for _, employee := range employeesList {
 		fmt.Println(employee)
@@ -47,5 +56,5 @@ func main() {
 
 	db.UpdateQuery(db1, employee4.Id, employee1.Name)
 
-	db.DeleteQuery(db1)
+	//db.DeleteQuery(db1)
 }
