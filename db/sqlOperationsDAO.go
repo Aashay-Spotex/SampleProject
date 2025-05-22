@@ -1,7 +1,9 @@
 package db
 
 import (
+	"bytes"
 	"database/sql"
+	"encoding/gob"
 	"fmt"
 	"sampleProject/bean"
 )
@@ -67,4 +69,44 @@ func DeleteQuery(db1 *sql.DB) {
 	} else {
 		fmt.Println("Deleted employess successfully!")
 	}
+	query3 = "delete from employess_object"
+	_, err = db1.Exec(query3)
+	if err != nil {
+		fmt.Println("Error deleting employess: ", err.Error())
+	} else {
+		fmt.Println("Deleted employess_object successfully!")
+	}
+}
+func InsertObjectQuery(db1 *sql.DB, employee bean.Employee) {
+	gob.Register(bean.Employee{})
+	var buf bytes.Buffer
+	encoder := gob.NewEncoder(&buf)
+	if err := encoder.Encode(employee); err != nil {
+		fmt.Println("GOB encoding failed: %s", err)
+	}
+	query4 := "insert into employess_object values (@id, @object)"
+	_, err := db1.Exec(query4, sql.Named("id", employee.Id), sql.Named("object", buf.Bytes()))
+	if err != nil {
+		fmt.Println("Insert failed: %s", err)
+	}
+
+	fmt.Println("User stored as BLOB successfully!")
+}
+
+func RetrieveObjectQuery(db1 *sql.DB, id int) bean.Employee {
+	var blob []byte
+	row := db1.QueryRow(`SELECT employee_object FROM employess_object WHERE ID = @p1`, id)
+	err := row.Scan(&blob)
+	if err != nil {
+		fmt.Println("Select failed: %s", err)
+	}
+
+	var retrievedEmployee bean.Employee
+	decoder := gob.NewDecoder(bytes.NewReader(blob))
+	if err := decoder.Decode(&retrievedEmployee); err != nil {
+		fmt.Println("GOB decoding failed: %s", err)
+	}
+
+	fmt.Printf("Decoded User: %+v\n", retrievedEmployee)
+	return retrievedEmployee
 }
