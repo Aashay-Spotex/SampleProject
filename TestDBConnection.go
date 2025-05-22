@@ -56,5 +56,5 @@ func main() {
 
 	db.UpdateQuery(db1, employee4.Id, employee1.Name)
 
-	//db.DeleteQuery(db1)
+	db.DeleteQuery(db1)
 }
