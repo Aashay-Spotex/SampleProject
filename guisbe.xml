@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messageSchema xmlns:sbe="http://fixprotocol.io/2016/sbe/sbe.xsd"
+               xmlns:xi="http://www.w3.org/2001/XInclude"
+               package="core-gui"
+               id="1" version="0"
+               semanticVersion="1.0"
+               description="Simple SBE Order Schema"
+               byteOrder="littleEndian">
+    <types>
+        <composite name="messageHeader"	description="Message identifiers and length of message root">
+            <type name="blockLength" primitiveType="uint16" />
+            <type name="templateId" primitiveType="uint16" />
+            <type name="schemaId" primitiveType="uint16" />
+            <type name="version" primitiveType="uint16" />
+        </composite>
+        <composite name="varDataEncoding">
+            <type name="length" primitiveType="uint16" maxValue="8192" />
+            <type name="varData" primitiveType="uint8" length="0" characterEncoding="UTF-8" />
+        </composite>
+    </types>
+
+    <sbe:message name="Order" id="1" description="Simple Order Add Message">
+        <field name="acctId" id="1" type="int32" description="Account ID"/>
+        <field name="dealQty" id="3" type="double" description="Deal Quantity"/>
+        <field name="ctrQty" id="4" type="double" description="Counter Quantity"/>
+        <data name="currPair" id="2" type="varDataEncoding" description="Currency Pair"/>
+    </sbe:message>
+</messageSchema>
