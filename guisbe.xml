@@ -20,9 +20,9 @@
     </types>
 
     <sbe:message name="Order" id="1" description="Simple Order Add Message">
-        <field name="acctId" id="1" type="int32" description="Account ID"/>
+        <field name="acctId" id="2" type="int32" description="Account ID"/>
         <field name="dealQty" id="3" type="double" description="Deal Quantity"/>
         <field name="ctrQty" id="4" type="double" description="Counter Quantity"/>
-        <data name="currPair" id="2" type="varDataEncoding" description="Currency Pair"/>
+        <data name="currPair" id="5" type="varDataEncoding" description="Currency Pair"/>
     </sbe:message>
 </messageSchema>

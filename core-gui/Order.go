@@ -140,7 +140,7 @@ func (*Order) SbeSemanticVersion() (semanticVersion string) {
 }
 
 func (*Order) AcctIdId() uint16 {
-	return 1
+	return 2
 }
 
 func (*Order) AcctIdSinceVersion() uint16 {
